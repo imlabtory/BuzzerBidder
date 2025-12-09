@@ -25,9 +25,6 @@ public class MemberController {
             @Valid @RequestBody MemberRequestDto.EmailSignUpRequest request) {
         MemberResponseDto.LoginResponse response = memberService.signUp(request);
 
-        // 토큰 생성 및 헤더/쿠키에 설정
-        setTokensInResponse(response.memberInfo().id());
-        
         return ApiResponse.ok("회원가입에 성공했습니다.", response);
     }
 
