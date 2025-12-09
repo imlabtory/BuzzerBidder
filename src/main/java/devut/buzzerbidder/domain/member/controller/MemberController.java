@@ -31,7 +31,7 @@ public class MemberController {
         return ApiResponse.ok("회원가입에 성공했습니다.", response);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public ApiResponse<MemberResponseDto.LoginResponse> login(
             @Valid @RequestBody MemberRequestDto.EmailLoginRequest request) {
         MemberResponseDto.LoginResponse response = memberService.login(request);

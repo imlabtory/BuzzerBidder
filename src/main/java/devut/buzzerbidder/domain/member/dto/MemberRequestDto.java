@@ -54,29 +54,5 @@ public class MemberRequestDto {
             @NotBlank(message = "비밀번호는 필수입니다.")
             String password
     ) {}
-
-    @Schema(description = "회원 정보 수정 요청")
-    public record UpdateMemberRequest(
-            @Schema(description = "닉네임", example = "hong123")
-            @Size(min = 2, max = 50, message = "닉네임은 2자 이상 50자 이하여야 합니다.")
-            String nickname,
-
-            @Schema(description = "프로필 이미지 URL", example = "https://example.com/image.jpg")
-            String profileImageUrl
-    ) {}
-
-    @Schema(description = "비밀번호 변경 요청")
-    public record ChangePasswordRequest(
-            @Schema(description = "현재 비밀번호", example = "oldPassword123!")
-            @NotBlank(message = "현재 비밀번호는 필수입니다.")
-            String currentPassword,
-
-            @Schema(description = "새 비밀번호", example = "newPassword123!")
-            @NotBlank(message = "새 비밀번호는 필수입니다.")
-            @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하여야 합니다.")
-            @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).*$",
-                    message = "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.")
-            String newPassword
-    ) {}
 }
 
