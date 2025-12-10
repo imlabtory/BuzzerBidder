@@ -1,26 +1,26 @@
 package devut.buzzerbidder.domain.member.dto;
 
-import devut.buzzerbidder.domain.member.entity.Member;
+import devut.buzzerbidder.domain.member.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
 
-public class MemberResponseDto {
+public class UserResponseDto {
 
     @Schema(description = "로그인 응답")
     public record LoginResponse(
             @Schema(description = "회원 정보")
-            MemberInfo memberInfo
+            UserInfo userInfo
     ) {
-        public static LoginResponse of(Member member) {
+        public static LoginResponse of(User user) {
             return new LoginResponse(
-                    MemberInfo.from(member)
+                    UserInfo.from(user)
             );
         }
     }
 
     @Schema(description = "회원 정보")
-    public record MemberInfo(
+    public record UserInfo(
             @Schema(description = "회원 ID", example = "1")
             Long id,
 
@@ -39,14 +39,14 @@ public class MemberResponseDto {
             @Schema(description = "프로필 이미지 URL", example = "https://example.com/image.jpg")
             String profileImageUrl
     ) {
-        public static MemberInfo from(Member member) {
-            return new MemberInfo(
-                    member.getId(),
-                    member.getEmail(),
-                    member.getName(),
-                    member.getNickname(),
-                    member.getBirthDate(),
-                    member.getProfileImageUrl()
+        public static UserInfo from(User user) {
+            return new UserInfo(
+                    user.getId(),
+                    user.getEmail(),
+                    user.getName(),
+                    user.getNickname(),
+                    user.getBirthDate(),
+                    user.getProfileImageUrl()
             );
         }
     }

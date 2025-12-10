@@ -1,9 +1,9 @@
 package devut.buzzerbidder.domain.member.service;
 
-import devut.buzzerbidder.domain.member.dto.MemberRequestDto;
-import devut.buzzerbidder.domain.member.dto.MemberResponseDto;
-import devut.buzzerbidder.domain.member.entity.Member;
-import devut.buzzerbidder.domain.member.repository.MemberRepository;
+import devut.buzzerbidder.domain.member.dto.UserRequestDto;
+import devut.buzzerbidder.domain.member.dto.UserResponseDto;
+import devut.buzzerbidder.domain.member.entity.User;
+import devut.buzzerbidder.domain.member.repository.UserRepository;
 import devut.buzzerbidder.global.exeption.BusinessException;
 import devut.buzzerbidder.global.exeption.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -14,20 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MemberService {
+public class UserService {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public MemberResponseDto.LoginResponse signUp(MemberRequestDto.EmailSignUpRequest request) {
+    public UserResponseDto.LoginResponse signUp(UserRequestDto.EmailSignUpRequest request) {
         // 이메일 중복 체크
-        if (memberRepository.existsByEmail(request.email())) {
+        if (userRepository.existsByEmail(request.email())) {
             throw new BusinessException(ErrorCode.MEMBER_EMAIL_DUPLICATE);
         }
 
         // 닉네임 중복 체크
-        if (memberRepository.existsByNickname(request.nickname())) {
+        if (userRepository.existsByNickname(request.nickname())) {
             throw new BusinessException(ErrorCode.MEMBER_NICKNAME_DUPLICATE);
         }
 
@@ -35,36 +35,36 @@ public class MemberService {
         String encodedPassword = passwordEncoder.encode(request.password());
 
         // 회원 생성
-        Member member = Member.builder()
+        User user = User.builder()
                 .email(request.email())
                 .password(encodedPassword)
                 .name(request.name())
                 .nickname(request.nickname())
                 .birthDate(request.birthDate())
                 .profileImageUrl(request.profileImageUrl())
-                .role(Member.MemberRole.USER)
-                .providerType(Member.ProviderType.EMAIL)
+                .role(User.UserRole.USER)
+                .providerType(User.ProviderType.EMAIL)
                 .build();
 
-        memberRepository.save(member);
+        userRepository.save(user);
 
-        return MemberResponseDto.LoginResponse.of(member);
+        return UserResponseDto.LoginResponse.of(user);
     }
 
-    public MemberResponseDto.LoginResponse login(MemberRequestDto.EmailLoginRequest request) {
-        Member member = memberRepository.findByEmail(request.email())
+    public UserResponseDto.LoginResponse login(UserRequestDto.EmailLoginRequest request) {
+        User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_LOGIN_FAILED));
 
         // 비밀번호 확인
-        if (!passwordEncoder.matches(request.password(), member.getPassword())) {
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new BusinessException(ErrorCode.MEMBER_LOGIN_FAILED);
         }
 
-        return MemberResponseDto.LoginResponse.of(member);
+        return UserResponseDto.LoginResponse.of(user);
     }
 
-    public Member findById(Long id) {
-        return memberRepository.findById(id)
+    public User findById(Long id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
     }
 }

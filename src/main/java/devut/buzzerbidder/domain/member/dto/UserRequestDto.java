@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-public class MemberRequestDto {
+public class UserRequestDto {
 
     @Schema(description = "이메일 회원가입 요청")
     public record EmailSignUpRequest(
