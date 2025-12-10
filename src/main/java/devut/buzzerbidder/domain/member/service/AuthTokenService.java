@@ -1,6 +1,6 @@
 package devut.buzzerbidder.domain.member.service;
 
-import devut.buzzerbidder.domain.member.entity.Member;
+import devut.buzzerbidder.domain.member.entity.User;
 import devut.buzzerbidder.global.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,21 +21,21 @@ public class AuthTokenService {
     @Value("${custom.jwt.refreshExpireSeconds:604800}") // 기본값 7일 (초)
     private long refreshExpireSeconds;
 
-    public String genAccessToken(Member member) {
+    public String genAccessToken(User user) {
         return JwtUtil.jwt.toString(
                 secretPattern,
                 expireSeconds,
-                Map.of("id", member.getId(), "email", member.getEmail(), "nickname",
-                        member.getNickname())
+                Map.of("id", user.getId(), "email", user.getEmail(), "nickname",
+                        user.getNickname())
         );
     }
 
-    public String genRefreshToken(Member member) {
+    public String genRefreshToken(User user) {
         return JwtUtil.jwt.toString(
                 secretPattern,
                 refreshExpireSeconds,
-                Map.of("id", member.getId(), "email", member.getEmail(), "nickname",
-                        member.getNickname())
+                Map.of("id", user.getId(), "email", user.getEmail(), "nickname",
+                        user.getNickname())
         );
     }
 
