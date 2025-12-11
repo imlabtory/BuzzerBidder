@@ -14,6 +14,7 @@ public record LiveItemModifyRequest(
     Category category,
     String description,
     Integer initPrice,
+    Boolean deliveryInclude,
     ItemStatus Itemstatus,
     AuctionStatus auctionStatus,
     LocalDateTime liveDate,

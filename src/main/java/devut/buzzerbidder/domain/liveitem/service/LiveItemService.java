@@ -15,7 +15,6 @@ import devut.buzzerbidder.domain.user.entity.User;
 import devut.buzzerbidder.global.exeption.BusinessException;
 import devut.buzzerbidder.global.exeption.ErrorCode;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,13 +29,14 @@ public class LiveItemService {
     private final LiveItemRepository liveItemRepository;
     private final LikeLiveService likeLiveService;
 
+    //TODO: 이미지 처리 코드 활성화
     @Transactional
     public LiveItemResponse writeLiveItem(LiveItemCreateRequest reqBody, User user) {
 
         LiveItem liveItem = new LiveItem(reqBody, user);
 
 
-        /* 이미지 처리코드 없어서 임시 주석처리
+        /*
         if (reqBody.images() == null || reqBody.images().isEmpty()) {
             throw new BusinessException(ErrorCode.IMAGE_FILE_EMPTY);
         }
@@ -54,6 +54,7 @@ public class LiveItemService {
 
     }
 
+    //TODO: 이미지 처리 코드 활성화
     @Transactional
     public LiveItemResponse modifyLiveItem(Long id, LiveItemModifyRequest reqBody, User user) {
 
@@ -67,7 +68,7 @@ public class LiveItemService {
 
         liveItem.modifyLiveItem(reqBody);
 
-        /* 이미지 처리 로직 없어서 임시 주석처리
+        /*
         // 새 이미지 URL이 있고, 기존과 다를 때만 교체
         if (reqBody.images() != null) {
             List<String> oldImageUrls = liveItem.getImages().stream()
@@ -98,6 +99,7 @@ public class LiveItemService {
 
     }
 
+    //TODO: 이미지 처리 코드 활성화
     @Transactional
     public void deleteLiveItem(Long id, User user) {
 
@@ -108,7 +110,7 @@ public class LiveItemService {
             throw new BusinessException(ErrorCode.FORBIDDEN_ACCESS);
         }
 
-        /* 이미지 처리 로직 없어서 임시 주석처리
+        /*
         if (!liveItem.getImages().isEmpty()) {
             List<String> oldImageUrls = liveItem.getImages().stream()
                 .map(LiveItemImage::getImageUrl)
@@ -122,6 +124,7 @@ public class LiveItemService {
         liveItemRepository.delete(liveItem);
     }
 
+    //TODO: 레디스에서 현재 입찰가 찾아서 추가하는 로직
     @Transactional(readOnly = true)
     public LiveItemDetailResponse getLiveItem(Long id) {
 
@@ -130,7 +133,7 @@ public class LiveItemService {
 
         long likeCount = likeLiveService.countByLiveItemId(id);
 
-        // 현재가 보내는 로직 추가
+        // 현재 입찰가 보내는 로직 추가
         return new LiveItemDetailResponse(
             liveItem.getName(),
             liveItem.getCategory(),
@@ -147,7 +150,7 @@ public class LiveItemService {
         );
     }
 
-    // TODO: 입찰가 확인추가하기
+    // TODO: 레디스에서 현재 입찰가로 가격 필터링 로직 추가
     @Transactional(readOnly = true)
     public LiveItemListResponse  getLiveItems(
         LiveItemSearchRequest reqBody,
@@ -167,6 +170,7 @@ public class LiveItemService {
     }
 
 
+    @Transactional
     public void changeAuctionStatus(Long id, User user, AuctionStatus auctionStatus) {
 
         LiveItem liveItem = liveItemRepository.findLiveItemWithImagesById(id)
@@ -197,10 +201,6 @@ public class LiveItemService {
 
         return new LiveItemListResponse(dtoList, dtoList.size());
 
-    }
-
-    public Optional<LiveItem> findById(Long id) {
-        return liveItemRepository.findById(id);
     }
 
 }

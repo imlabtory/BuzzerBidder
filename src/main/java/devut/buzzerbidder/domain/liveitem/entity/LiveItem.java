@@ -146,6 +146,7 @@ public class LiveItem extends BaseEntity {
         this.category = request.category();
         this.description = request.description();
         this.initPrice = request.initPrice();
+        this.deliveryInclude = request.deliveryInclude();
         this.Itemstatus = request.Itemstatus();
         this.auctionStatus = request.auctionStatus();
         this.liveDate = request.liveDate();
