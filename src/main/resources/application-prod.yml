@@ -63,3 +63,6 @@ custom:
     shortExpireSeconds: 600  # 10분 (초)
     refreshExpireSeconds: 604800  # 7일 (초)
 
+delivery:
+  client-id: ${DELIVERY_CLIENT_ID}
+  client-secret: ${DELIVERY_CLIENT_SECRET}

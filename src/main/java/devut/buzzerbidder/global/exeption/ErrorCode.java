@@ -17,7 +17,7 @@ public enum ErrorCode {
     NOT_FOUND_DATA("CMN008", HttpStatus.NOT_FOUND, "존재하지 않는 데이터입니다."),
     BAD_REQUEST_FORMAT("CMN009", HttpStatus.BAD_REQUEST, "잘못된 형식의 요청 데이터입니다."),
 
-    // ========== Member 도메인 에러 ==========
+    // ========== User 도메인 에러 ==========
     MEMBER_NOT_FOUND("M001", HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."),
     MEMBER_EMAIL_DUPLICATE("M002", HttpStatus.CONFLICT, "이미 사용 중인 이메일입니다."),
     MEMBER_NICKNAME_DUPLICATE("M003", HttpStatus.CONFLICT, "이미 사용 중인 닉네임입니다."),
@@ -25,7 +25,9 @@ public enum ErrorCode {
     MEMBER_LOGIN_FAILED("M005", HttpStatus.UNAUTHORIZED, "로그인에 실패했습니다."),
 
     // ========== Deal 도메인 에러 ==========
-    DEAL_NOT_FOUND("D001", HttpStatus.NOT_FOUND, "존재하지 않는 거래입니다.");
+    DEAL_NOT_FOUND("D001", HttpStatus.NOT_FOUND, "존재하지 않는 거래입니다."),
+    DEAL_INVALID_TYPE("D002", HttpStatus.BAD_REQUEST, "잘못된 거래 유형입니다."),
+    DEAL_DELIVERY_INFO_NOT_FOUND("D003", HttpStatus.NOT_FOUND, "배송 정보가 존재하지 않습니다.");
 
     private final String code;
     private final HttpStatus status;

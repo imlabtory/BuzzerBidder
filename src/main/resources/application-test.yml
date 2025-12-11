@@ -24,3 +24,6 @@ spring:
 server:
   port: 0  # 랜덤 포트 사용
 
+delivery:
+  client-id: ${DELIVERY_CLIENT_ID}
+  client-secret: ${DELIVERY_CLIENT_SECRET}
