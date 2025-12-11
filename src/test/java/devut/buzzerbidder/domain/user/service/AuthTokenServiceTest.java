@@ -1,10 +1,8 @@
-package devut.buzzerbidder.domain.member.service;
+package devut.buzzerbidder.domain.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import devut.buzzerbidder.domain.user.service.AuthTokenService;
-import devut.buzzerbidder.domain.user.service.RefreshTokenService;
 import devut.buzzerbidder.global.exeption.BusinessException;
 
 import devut.buzzerbidder.TestcontainersConfig;

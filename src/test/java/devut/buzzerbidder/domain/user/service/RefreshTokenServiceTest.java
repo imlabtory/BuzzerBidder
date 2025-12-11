@@ -1,9 +1,8 @@
-package devut.buzzerbidder.domain.member.service;
+package devut.buzzerbidder.domain.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import devut.buzzerbidder.TestcontainersConfig;
-import devut.buzzerbidder.domain.user.service.RefreshTokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

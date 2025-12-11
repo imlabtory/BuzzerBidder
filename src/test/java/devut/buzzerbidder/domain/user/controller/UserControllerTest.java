@@ -1,4 +1,4 @@
-package devut.buzzerbidder.domain.member.controller;
+package devut.buzzerbidder.domain.user.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

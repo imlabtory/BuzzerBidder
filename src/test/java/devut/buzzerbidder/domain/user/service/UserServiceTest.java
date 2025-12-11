@@ -1,4 +1,4 @@
-package devut.buzzerbidder.domain.member.service;
+package devut.buzzerbidder.domain.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -9,7 +9,6 @@ import devut.buzzerbidder.domain.user.dto.request.EmailSignUpRequest;
 import devut.buzzerbidder.domain.user.dto.response.LoginResponse;
 import devut.buzzerbidder.domain.user.entity.User;
 import devut.buzzerbidder.domain.user.repository.UserRepository;
-import devut.buzzerbidder.domain.user.service.UserService;
 import devut.buzzerbidder.global.exeption.BusinessException;
 import devut.buzzerbidder.global.exeption.ErrorCode;
 import java.time.LocalDate;
