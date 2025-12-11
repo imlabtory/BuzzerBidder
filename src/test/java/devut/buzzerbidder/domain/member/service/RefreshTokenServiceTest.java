@@ -12,29 +12,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+
 @SpringBootTest
 @ActiveProfiles("test")
 @Import(TestcontainersConfig.class)
 class RefreshTokenServiceTest {
-
-    @DynamicPropertySource
-    static void registerProperties(DynamicPropertyRegistry registry) {
-        // 컨테이너가 준비되었는지 확인
-        var mysql = TestcontainersConfig.getMysql();
-        
-        // 컨테이너가 시작되었는지 확인
-        if (!mysql.isRunning()) {
-            mysql.start();
-        }
-        
-        registry.add("spring.datasource.url", mysql::getJdbcUrl);
-        registry.add("spring.datasource.username", mysql::getUsername);
-        registry.add("spring.datasource.password", mysql::getPassword);
-        registry.add("spring.datasource.driver-class-name", () -> "com.mysql.cj.jdbc.Driver");
-        // Redis는 @Bean으로 관리하므로 여기서는 설정하지 않음
-    }
 
     @Autowired
     private RefreshTokenService refreshTokenService;

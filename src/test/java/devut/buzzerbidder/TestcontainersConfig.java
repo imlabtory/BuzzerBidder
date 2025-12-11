@@ -1,6 +1,7 @@
 package devut.buzzerbidder;
 
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
@@ -21,12 +22,13 @@ import org.testcontainers.utility.DockerImageName;
  * 테스트 실행 시 MySQL과 Redis 컨테이너를 자동으로 시작하고 종료합니다.
  * 
  * 사용법:
- * - 각 테스트 클래스에 @Import(TestcontainersConfiguration.class) 추가
- * - 각 테스트 클래스에 @DynamicPropertySource를 추가하여 컨테이너 속성을 등록해야 합니다.
+ * - 각 테스트 클래스에 @Import(TestcontainersConfig.class) 추가
+ * - @ServiceConnection을 사용하여 MySQL 데이터소스 속성이 자동으로 설정됩니다.
+ * - Redis는 testRedisConnectionFactory Bean을 통해 자동으로 연결됩니다.
  * 
  * 참고: 
- * - @DynamicPropertySource는 @TestConfiguration 클래스에서는 작동하지 않으므로,
- *   각 테스트 클래스에 직접 선언해야 합니다.
+ * - @ServiceConnection은 Spring Boot 3.1+에서 제공하는 기능으로,
+ *   Testcontainers와 Spring Boot를 자동으로 연결해줍니다.
  * - Redis ConnectionFactory는 @Lazy로 설정하여 컨테이너가 준비된 후에 생성되도록 합니다.
  */
 @TestConfiguration(proxyBeanMethods = false)
@@ -66,8 +68,10 @@ public class TestcontainersConfig {
 
     /**
      * MySQL 컨테이너를 Bean으로 등록
+     * @ServiceConnection을 사용하여 Spring Boot가 자동으로 데이터소스 속성을 설정합니다.
      */
     @Bean
+    @ServiceConnection
     MySQLContainer<?> mysqlContainer() {
         return mysql;
     }
