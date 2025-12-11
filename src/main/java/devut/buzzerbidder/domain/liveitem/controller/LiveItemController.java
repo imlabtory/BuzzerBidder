@@ -1,5 +1,6 @@
 package devut.buzzerbidder.domain.liveitem.controller;
 
+import devut.buzzerbidder.domain.liveitem.dto.request.AuctionStatusRequest;
 import devut.buzzerbidder.domain.liveitem.dto.request.LiveItemCreateRequest;
 import devut.buzzerbidder.domain.liveitem.dto.request.LiveItemModifyRequest;
 import devut.buzzerbidder.domain.liveitem.dto.request.LiveItemSearchRequest;
@@ -7,7 +8,6 @@ import devut.buzzerbidder.domain.liveitem.dto.request.PagingRequest;
 import devut.buzzerbidder.domain.liveitem.dto.response.LiveItemDetailResponse;
 import devut.buzzerbidder.domain.liveitem.dto.response.LiveItemListResponse;
 import devut.buzzerbidder.domain.liveitem.dto.response.LiveItemResponse;
-import devut.buzzerbidder.domain.liveitem.entity.LiveItem.AuctionStatus;
 import devut.buzzerbidder.domain.liveitem.service.LiveItemService;
 import devut.buzzerbidder.global.response.ApiResponse;
 import devut.buzzerbidder.global.security.CustomUserDetails;
@@ -104,12 +104,12 @@ public class LiveItemController {
     @PatchMapping("/{id}")
     public ApiResponse<Void> changeAuctionStatus(
         @PathVariable Long id,
-        @RequestParam AuctionStatus auctionStatus,
+        @RequestBody AuctionStatusRequest reqBody,
         @AuthenticationPrincipal CustomUserDetails userDetails
 
     ) {
 
-        liveItemService.changeAuctionStatus(id, userDetails.getUser(), auctionStatus);
+        liveItemService.changeAuctionStatus(id, userDetails.getUser(), reqBody.auctionStatus());
 
         return ApiResponse.ok("%d번 경매품 경매 상태 수정".formatted(id));
     }

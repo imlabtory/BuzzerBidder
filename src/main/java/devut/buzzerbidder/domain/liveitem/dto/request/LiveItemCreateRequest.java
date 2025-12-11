@@ -11,15 +11,15 @@ public record LiveItemCreateRequest(
     Long auctionId,
     String name,
     Category category,
+    ItemStatus Itemstatus,
     String description,
     Integer initPrice,
     Boolean deliveryInclude,
-    ItemStatus Itemstatus,
-    AuctionStatus auctionStatus,
     LocalDateTime liveDate,
     Boolean directDealAvailable,
     String region,
     String preferredPlace,
+    AuctionStatus auctionStatus,
     List<String> images
     ) {
 
