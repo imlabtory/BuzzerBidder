@@ -24,12 +24,12 @@ public class UserService {
     public LoginResponse signUp(EmailSignUpRequest request) {
         // 이메일 중복 체크
         if (userRepository.existsByEmail(request.email())) {
-            throw new BusinessException(ErrorCode.MEMBER_EMAIL_DUPLICATE);
+            throw new BusinessException(ErrorCode.USER_EMAIL_DUPLICATE);
         }
 
         // 닉네임 중복 체크
         if (userRepository.existsByNickname(request.nickname())) {
-            throw new BusinessException(ErrorCode.MEMBER_NICKNAME_DUPLICATE);
+            throw new BusinessException(ErrorCode.USER_NICKNAME_DUPLICATE);
         }
 
         // 비밀번호 암호화
@@ -54,11 +54,11 @@ public class UserService {
 
     public LoginResponse login(EmailLoginRequest request) {
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_LOGIN_FAILED));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_LOGIN_FAILED));
 
         // 비밀번호 확인
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new BusinessException(ErrorCode.MEMBER_LOGIN_FAILED);
+            throw new BusinessException(ErrorCode.USER_LOGIN_FAILED);
         }
 
         return LoginResponse.of(user);
@@ -66,6 +66,6 @@ public class UserService {
 
     public User findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 }

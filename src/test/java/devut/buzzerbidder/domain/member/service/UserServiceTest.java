@@ -76,7 +76,7 @@ class UserServiceTest {
         assertThatThrownBy(() -> userService.signUp(signUpRequest))
                 .isInstanceOf(BusinessException.class)
                 .extracting("errorCode")
-                .isEqualTo(ErrorCode.MEMBER_EMAIL_DUPLICATE);
+                .isEqualTo(ErrorCode.USER_EMAIL_DUPLICATE);
     }
 
     @Test
@@ -97,7 +97,7 @@ class UserServiceTest {
         assertThatThrownBy(() -> userService.signUp(anotherRequest))
                 .isInstanceOf(BusinessException.class)
                 .extracting("errorCode")
-                .isEqualTo(ErrorCode.MEMBER_NICKNAME_DUPLICATE);
+                .isEqualTo(ErrorCode.USER_NICKNAME_DUPLICATE);
     }
 
     @Test
@@ -131,7 +131,7 @@ class UserServiceTest {
         assertThatThrownBy(() -> userService.login(loginRequest))
                 .isInstanceOf(BusinessException.class)
                 .extracting("errorCode")
-                .isEqualTo(ErrorCode.MEMBER_LOGIN_FAILED);
+                .isEqualTo(ErrorCode.USER_LOGIN_FAILED);
     }
 
     @Test
@@ -148,7 +148,7 @@ class UserServiceTest {
         assertThatThrownBy(() -> userService.login(loginRequest))
                 .isInstanceOf(BusinessException.class)
                 .extracting("errorCode")
-                .isEqualTo(ErrorCode.MEMBER_LOGIN_FAILED);
+                .isEqualTo(ErrorCode.USER_LOGIN_FAILED);
     }
 
     @Test
@@ -185,7 +185,7 @@ class UserServiceTest {
         assertThatThrownBy(() -> userService.findById(999L))
                 .isInstanceOf(BusinessException.class)
                 .extracting("errorCode")
-                .isEqualTo(ErrorCode.MEMBER_NOT_FOUND);
+                .isEqualTo(ErrorCode.USER_NOT_FOUND);
     }
 }
 

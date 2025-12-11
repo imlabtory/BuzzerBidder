@@ -92,7 +92,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
         // 데이터베이스에서 실제 User 조회
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         UserDetails userDetails = new CustomUserDetails(user);
 

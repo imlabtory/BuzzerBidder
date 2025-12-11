@@ -75,13 +75,13 @@ public class AuthTokenService {
     public User validateAndGetUserByRefreshToken(String refreshToken) {
         // 1. Refresh Token 검증
         if (refreshToken == null || refreshToken.isBlank()) {
-            throw new BusinessException(ErrorCode.MEMBER_TOKEN_INVALID);
+            throw new BusinessException(ErrorCode.USER_TOKEN_INVALID);
         }
 
         // 2. JWT에서 payload 추출
         Map<String, Object> payload = payloadOrNull(refreshToken);
         if (payload == null) {
-            throw new BusinessException(ErrorCode.MEMBER_TOKEN_INVALID);
+            throw new BusinessException(ErrorCode.USER_TOKEN_INVALID);
         }
 
         // 3. User ID 추출
@@ -90,11 +90,11 @@ public class AuthTokenService {
 
         // 4. Redis에서 저장된 refresh token과 비교
         if (!refreshTokenService.validateRefreshToken(userId, refreshToken)) {
-            throw new BusinessException(ErrorCode.MEMBER_TOKEN_INVALID);
+            throw new BusinessException(ErrorCode.USER_TOKEN_INVALID);
         }
 
         // 5. User 조회 및 반환
         return userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 }
