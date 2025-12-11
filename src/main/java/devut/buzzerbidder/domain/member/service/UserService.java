@@ -1,7 +1,8 @@
 package devut.buzzerbidder.domain.member.service;
 
-import devut.buzzerbidder.domain.member.dto.UserRequestDto;
-import devut.buzzerbidder.domain.member.dto.UserResponseDto;
+import devut.buzzerbidder.domain.member.dto.request.EmailLoginRequest;
+import devut.buzzerbidder.domain.member.dto.request.EmailSignUpRequest;
+import devut.buzzerbidder.domain.member.dto.response.LoginResponse;
 import devut.buzzerbidder.domain.member.entity.User;
 import devut.buzzerbidder.domain.member.repository.UserRepository;
 import devut.buzzerbidder.global.exeption.BusinessException;
@@ -20,7 +21,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserResponseDto.LoginResponse signUp(UserRequestDto.EmailSignUpRequest request) {
+    public LoginResponse signUp(EmailSignUpRequest request) {
         // 이메일 중복 체크
         if (userRepository.existsByEmail(request.email())) {
             throw new BusinessException(ErrorCode.MEMBER_EMAIL_DUPLICATE);
@@ -48,10 +49,10 @@ public class UserService {
 
         userRepository.save(user);
 
-        return UserResponseDto.LoginResponse.of(user);
+        return LoginResponse.of(user);
     }
 
-    public UserResponseDto.LoginResponse login(UserRequestDto.EmailLoginRequest request) {
+    public LoginResponse login(EmailLoginRequest request) {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_LOGIN_FAILED));
 
@@ -60,7 +61,7 @@ public class UserService {
             throw new BusinessException(ErrorCode.MEMBER_LOGIN_FAILED);
         }
 
-        return UserResponseDto.LoginResponse.of(user);
+        return LoginResponse.of(user);
     }
 
     public User findById(Long id) {
