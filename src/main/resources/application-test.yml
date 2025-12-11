@@ -27,3 +27,10 @@ server:
 delivery:
   client-id: ${DELIVERY_CLIENT_ID}
   client-secret: ${DELIVERY_CLIENT_SECRET}
+
+# JWT 설정
+custom:
+  jwt:
+    secretPattern: test-secret-key-for-jwt-token-generation-minimum-256-bits-long-for-security
+    expireSeconds: 1800  # 30분 (초)
+    refreshExpireSeconds: 604800  # 7일 (초)
