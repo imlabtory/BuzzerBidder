@@ -1,0 +1,35 @@
+package devut.buzzerbidder.domain.wallet.entity;
+
+import devut.buzzerbidder.domain.user.entity.User;
+import devut.buzzerbidder.global.exeption.BusinessException;
+import devut.buzzerbidder.global.exeption.ErrorCode;
+import devut.buzzerbidder.global.jpa.entity.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+public class Wallet extends BaseEntity {
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, unique = true)
+    private User user;
+
+    @Column(nullable = false)
+    private Long bizz;
+
+    public void increaseBizz(Long amount) {
+        this.bizz += amount;
+    }
+
+    public void decreaseBizz(Long amount) {
+        if (this.bizz < amount) {
+            throw new BusinessException(ErrorCode.BIZZ_INSUFFICIENT_BALANCE);
+        }
+        this.bizz -= amount;
+    }
+
+}

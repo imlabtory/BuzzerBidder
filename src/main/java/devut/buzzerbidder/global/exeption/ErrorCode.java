@@ -28,7 +28,15 @@ public enum ErrorCode {
     // ========== Deal 도메인 에러 ==========
     DEAL_NOT_FOUND("D001", HttpStatus.NOT_FOUND, "존재하지 않는 거래입니다."),
     DEAL_INVALID_TYPE("D002", HttpStatus.BAD_REQUEST, "잘못된 경매 유형입니다."),
-    DEAL_DELIVERY_INFO_NOT_FOUND("D003", HttpStatus.NOT_FOUND, "배송 정보가 존재하지 않습니다.");
+    DEAL_DELIVERY_INFO_NOT_FOUND("D003", HttpStatus.NOT_FOUND, "배송 정보가 존재하지 않습니다."),
+
+    // ========== Wallet 도메인 에러 ==========
+    WALLET_NOT_FOUND("W001", HttpStatus.NOT_FOUND, "지갑이 존재하지 않습니다."),
+    BIZZ_INSUFFICIENT_BALANCE("W002", HttpStatus.BAD_REQUEST, "BIZZ 잔액이 부족합니다."),
+    INVALID_WALLET_TRANSACTION_TYPE("W004", HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 거래 유형입니다."),
+    INVALID_WALLET_AMOUNT("W005", HttpStatus.BAD_REQUEST, "충전/차감 금액은 null 또는 0 이하일 수 없습니다."),
+    INVALID_TRANSFER("W006", HttpStatus.BAD_REQUEST, "자기 자신에게 지불할 수 없습니다."),
+    WALLET_ALREADY_EXISTS("W007", HttpStatus.CONFLICT, "사용자 지갑이 이미 존재합니다.");
 
     private final String code;
     private final HttpStatus status;
@@ -39,4 +47,5 @@ public enum ErrorCode {
         this.status = status;
         this.message = message;
     }
+
 }

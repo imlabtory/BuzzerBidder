@@ -1,5 +1,6 @@
 package devut.buzzerbidder.domain.user.service;
 
+import devut.buzzerbidder.domain.wallet.service.WalletService;
 import devut.buzzerbidder.domain.user.dto.request.EmailLoginRequest;
 import devut.buzzerbidder.domain.user.dto.request.EmailSignUpRequest;
 import devut.buzzerbidder.domain.user.dto.response.LoginResponse;
@@ -19,6 +20,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final WalletService walletService;
 
     @Transactional
     public LoginResponse signUp(EmailSignUpRequest request) {
@@ -39,7 +41,6 @@ public class UserService {
         User user = User.builder()
                 .email(request.email())
                 .password(encodedPassword)
-                .name(request.name())
                 .nickname(request.nickname())
                 .birthDate(request.birthDate())
                 .profileImageUrl(request.profileImageUrl())
@@ -48,6 +49,8 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+
+        walletService.createWallet(user); // Bizz 지갑 생성
 
         return LoginResponse.of(user);
     }
@@ -68,4 +71,5 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
+
 }
