@@ -22,14 +22,24 @@ public class Wallet extends BaseEntity {
     private Long bizz;
 
     public void increaseBizz(Long amount) {
+        validateAmount(amount);
         this.bizz += amount;
     }
 
     public void decreaseBizz(Long amount) {
+        validateAmount(amount);
         if (this.bizz < amount) {
             throw new BusinessException(ErrorCode.BIZZ_INSUFFICIENT_BALANCE);
         }
         this.bizz -= amount;
+    }
+
+    /* ==================== 헬퍼 메서드 ==================== */
+
+    private void validateAmount(Long amount) {
+        if (amount == null || amount <= 0) {
+            throw new BusinessException(ErrorCode.INVALID_WALLET_AMOUNT);
+        }
     }
 
 }
